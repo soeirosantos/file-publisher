@@ -1,0 +1,4 @@
+logging:
+  level: INFO
+  loggers:
+    br.com.soeirosantos.publisher: DEBUG
