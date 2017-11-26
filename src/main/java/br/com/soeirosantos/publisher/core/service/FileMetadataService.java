@@ -6,7 +6,6 @@ import br.com.soeirosantos.publisher.client.NotificationService;
 import br.com.soeirosantos.publisher.client.StorageService;
 import br.com.soeirosantos.publisher.core.entity.FileMetadata;
 import br.com.soeirosantos.publisher.db.FileMetadataDao;
-import org.apache.tika.Tika;
 import org.modelmapper.ModelMapper;
 
 import java.io.InputStream;
@@ -20,7 +19,6 @@ public class FileMetadataService {
     private final StorageService storageService;
     private final NotificationService notificationService;
     private final FileDetailsMapper mapper = new FileDetailsMapper(new ModelMapper());
-    private final Tika tika = new Tika();
 
     public FileMetadataService(FileMetadataDao fileMetadataDao, StorageService storageService,
                                NotificationService notificationService) {

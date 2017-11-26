@@ -24,10 +24,9 @@ public class SnsClient implements NotificationService {
 
     @SneakyThrows
     @Override
-    public String notify(FileMetadata fileMetadata) {
+    public void notify(FileMetadata fileMetadata) {
         NewFileEvent event = new NewFileEvent(fileMetadata.getId(), fileMetadata.getName(), fileMetadata.getSize(), LocalDateTime.now());
         PublishRequest publishRequest = new PublishRequest(topicName, objectMapper.writeValueAsString(event));
-        PublishResult publishResult = amazonSns.publish(publishRequest);
-        return publishResult.getMessageId();
+        amazonSns.publish(publishRequest);
     }
 }

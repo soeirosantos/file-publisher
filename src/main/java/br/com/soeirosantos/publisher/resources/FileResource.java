@@ -53,11 +53,8 @@ public class FileResource {
     @UnitOfWork
     public Response get(@PathParam("fileId") String id) {
         Optional<FileMetadata> fileMetadata = fileMetadataService.get(id);
-        if (fileMetadata.isPresent()) {
-            return Response.ok(fileMetadata.get()).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        return fileMetadata.map(metadata ->
+                Response.ok(metadata).build()).orElseGet(() -> Response.status(Response.Status.NOT_FOUND).build());
     }
 
     @GET

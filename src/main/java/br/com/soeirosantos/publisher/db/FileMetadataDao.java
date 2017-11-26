@@ -13,8 +13,8 @@ public class FileMetadataDao extends AbstractDAO<FileMetadata> {
         super(sessionFactory);
     }
 
-    public FileMetadata save(FileMetadata metadata) {
-        return persist(metadata);
+    public void save(FileMetadata metadata) {
+        persist(metadata);
     }
 
     public Optional<FileMetadata> findById(String id) {

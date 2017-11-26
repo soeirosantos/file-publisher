@@ -20,9 +20,9 @@ public class S3Client implements StorageService {
 
     @Override
     public void save(InputStream file, FileMetadata fileMetadata) {
-        ObjectMetadata objectMetada = new ObjectMetadata();
-        objectMetada.setContentLength(fileMetadata.getSize());
-        amazonS3.putObject(bucketName, fileMetadata.getId(), file, objectMetada);
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(fileMetadata.getSize());
+        amazonS3.putObject(bucketName, fileMetadata.getId(), file, objectMetadata);
     }
 
     @Override

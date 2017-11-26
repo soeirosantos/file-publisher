@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public interface NotificationService {
 
-    String notify(FileMetadata fileMetadata);
+    void notify(FileMetadata fileMetadata);
 
     @Data
     class NewFileEvent {
