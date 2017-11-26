@@ -58,7 +58,7 @@ public class FilePublisherApplication extends Application<FilePublisherConfigura
         final FileMetadataService fileMetadataService = new FileMetadataService(fileMetadataDao,
                 storageService, notificationService);
         environment.jersey().register(MultiPartFeature.class);
-        environment.jersey().register(new FileResource(fileMetadataService));
+        environment.jersey().register(new FileResource(fileMetadataService, configuration.getMaxRequestSize()));
     }
 
 }

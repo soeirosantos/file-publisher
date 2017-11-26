@@ -9,12 +9,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -27,18 +30,26 @@ import java.util.Optional;
 public class FileResource {
 
     private final FileMetadataService fileMetadataService;
+    private final Long maxContentLength;
 
-    public FileResource(FileMetadataService fileMetadataService) {
+    public FileResource(FileMetadataService fileMetadataService, Long maxContentLength) {
         this.fileMetadataService = fileMetadataService;
+        this.maxContentLength = maxContentLength;
     }
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @UnitOfWork
     @Timed
-    public Response publish(@FormDataParam("details") FileDetails details,
+    public Response publish(@HeaderParam(HttpHeaders.CONTENT_LENGTH) Long length,
+                            @Valid @FormDataParam("details") FileDetails details,
                             @FormDataParam("file") InputStream file,
                             @FormDataParam("file") FormDataContentDisposition fileDisposition) {
+
+        if (length > maxContentLength) {
+            throw new WebApplicationException(String.format("Request is too large. (Limit: %s bytes)", maxContentLength),
+                    Response.Status.BAD_REQUEST);
+        }
 
         details.setName(fileDisposition.getFileName());
         details.setCreated(fileDisposition.getCreationDate());

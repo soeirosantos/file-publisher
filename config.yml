@@ -33,3 +33,5 @@ aws:
     bucketName: file-publisher
   sns:
     topicName: baz
+
+maxRequestSize: 52428800 #50MB

@@ -22,6 +22,9 @@ public class FilePublisherConfiguration extends Configuration {
     @NotNull
     private AwsConfiguration aws = new AwsConfiguration();
 
+    @NotNull
+    private Long maxRequestSize;
+
     @JsonProperty("database")
     public DataSourceFactory getDataSourceFactory() {
         return database;
