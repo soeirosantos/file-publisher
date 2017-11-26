@@ -40,6 +40,10 @@ public class FileResource {
                             @FormDataParam("file") FormDataContentDisposition fileDisposition) {
 
         details.setOriginalName(fileDisposition.getFileName());
+        details.setCreated(fileDisposition.getCreationDate());
+        details.setLastModified(fileDisposition.getModificationDate());
+        details.setSize(fileDisposition.getSize());
+        details.setType(fileDisposition.getType());
         FileMetadata metadata = fileMetadataService.publish(file, details);
         return Response.ok(metadata).build();
     }
@@ -65,4 +69,9 @@ public class FileResource {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
+    @GET
+    @UnitOfWork
+    public Response list() {
+        return Response.ok(fileMetadataService.all()).build();
+    }
 }

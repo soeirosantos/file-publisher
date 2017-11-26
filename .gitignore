@@ -27,3 +27,4 @@ release.properties
 !.idea/codeStyleSettings.xml
 !.idea/encodings.xml
 .idea
+local-config.yml

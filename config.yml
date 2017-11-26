@@ -24,3 +24,12 @@ logging:
       archivedFileCount: 7
       timeZone: UTC
       maxFileSize: 10MB
+
+aws:
+  credentials:
+    accessKey: foo
+    secretKey: bar
+  s3:
+    bucketName: file-publisher
+  sns:
+    topicName: baz
