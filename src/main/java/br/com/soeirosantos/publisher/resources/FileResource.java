@@ -39,11 +39,10 @@ public class FileResource {
                             @FormDataParam("file") InputStream file,
                             @FormDataParam("file") FormDataContentDisposition fileDisposition) {
 
-        details.setOriginalName(fileDisposition.getFileName());
+        details.setName(fileDisposition.getFileName());
         details.setCreated(fileDisposition.getCreationDate());
         details.setLastModified(fileDisposition.getModificationDate());
         details.setSize(fileDisposition.getSize());
-        details.setType(fileDisposition.getType());
         FileMetadata metadata = fileMetadataService.publish(file, details);
         return Response.ok(metadata).build();
     }

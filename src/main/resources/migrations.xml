@@ -11,9 +11,8 @@
 			<column name="id" type="varchar(36)">
 				<constraints primaryKey="true" nullable="false"/>
 			</column>
-			<column name="name" type="varchar(255)" />
-			<column name="originalName" type="varchar(255)"/>
-			<column name="virtualPath" type="varchar(500)"/>
+			<column name="description" type="varchar(500)" />
+			<column name="name" type="varchar(255)"/>
 			<column name="type" type="varchar(255)"/>
 			<column name="size" type="bigint"/>
 			<column name="created" type="timestamp"/>

@@ -12,9 +12,8 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FileDetails {
 
-    @NotEmpty
-    @Length(max = 255)
-    private final String name;
+    @Length(max = 500)
+    private final String description;
 
     @JsonIgnore
     private String type;
@@ -29,5 +28,5 @@ public class FileDetails {
     private Date lastModified;
 
     @JsonIgnore
-    private String originalName;
+    private String name;
 }

@@ -1,12 +1,15 @@
 package br.com.soeirosantos.publisher;
 
+import br.com.soeirosantos.publisher.client.NotificationService;
 import br.com.soeirosantos.publisher.client.StorageService;
 import br.com.soeirosantos.publisher.client.impl.S3Client;
+import br.com.soeirosantos.publisher.client.impl.SnsClient;
 import br.com.soeirosantos.publisher.core.entity.FileMetadata;
 import br.com.soeirosantos.publisher.core.service.FileMetadataService;
 import br.com.soeirosantos.publisher.db.FileMetadataDao;
 import br.com.soeirosantos.publisher.resources.FileResource;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.sns.AmazonSNS;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
@@ -48,8 +51,12 @@ public class FilePublisherApplication extends Application<FilePublisherConfigura
 
         final FileMetadataDao fileMetadataDao = new FileMetadataDao(hibernateBundle.getSessionFactory());
         final AmazonS3 s3Client = configuration.getAws().getS3ClientFactory().build();
-        final StorageService storageService = new S3Client(configuration.getAws().getS3().getBucketName(), s3Client);
-        final FileMetadataService fileMetadataService = new FileMetadataService(fileMetadataDao, storageService);
+        final StorageService storageService = new S3Client(s3Client, configuration.getAws().getS3().getBucketName());
+        final AmazonSNS snsClient = configuration.getAws().getSnsClientFactory().build();
+        final NotificationService notificationService = new SnsClient(snsClient,
+                configuration.getAws().getSns().getTopicName(), environment.getObjectMapper());
+        final FileMetadataService fileMetadataService = new FileMetadataService(fileMetadataDao,
+                storageService, notificationService);
         environment.jersey().register(MultiPartFeature.class);
         environment.jersey().register(new FileResource(fileMetadataService));
     }

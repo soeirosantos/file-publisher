@@ -12,8 +12,8 @@ public class FileMetadata {
 
     @Id
     private String id;
+    private String description;
     private String name;
-    private String originalName;
     private String type;
     private Long size;
     private LocalDateTime created;
