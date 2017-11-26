@@ -31,7 +31,7 @@ public class FileMetadataService {
         FileMetadata metadata = mapper.toEntity(details);
         metadata.setId(UUID.randomUUID().toString());
         fileMetadataDao.save(metadata);
-        storageService.save(file, metadata);
+        storageService.save(file, metadata); //TODO - if some error occurs sending notifications S3 won't be rolled back
         notificationService.notify(metadata);
         return metadata;
     }

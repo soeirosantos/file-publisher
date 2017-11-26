@@ -5,6 +5,7 @@ import br.com.soeirosantos.publisher.core.entity.FileMetadata;
 import br.com.soeirosantos.publisher.core.service.FileMetadataService;
 import com.codahale.metrics.annotation.Timed;
 import io.dropwizard.hibernate.UnitOfWork;
+import io.dropwizard.jersey.caching.CacheControl;
 import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -23,6 +24,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Path("/files")
@@ -72,6 +74,7 @@ public class FileResource {
     @Path("/{fileId}/download")
     @UnitOfWork
     @Timed
+    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.HOURS)
     public Response download(@PathParam("fileId") String id) {
         Optional<FileMetadata> metadata = fileMetadataService.get(id);
         if (metadata.isPresent()) {
