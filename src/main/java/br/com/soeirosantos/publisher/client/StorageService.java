@@ -8,4 +8,5 @@ public interface StorageService {
 
     void save(InputStream file, FileMetadata fileMetadata);
 
+    InputStream get(String id);
 }

@@ -15,6 +15,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
@@ -64,8 +65,15 @@ public class FileResource {
     @UnitOfWork
     @Timed
     public Response download(@PathParam("fileId") String id) {
-        // TODO -
-        return Response.status(Response.Status.NOT_FOUND).build();
+        Optional<FileMetadata> metadata = fileMetadataService.get(id);
+        if (metadata.isPresent()) {
+            InputStream content = fileMetadataService.getContent(id);
+            Response.ResponseBuilder response = Response.ok(content);
+            response.header(HttpHeaders.CONTENT_DISPOSITION,"attachment;filename=" + metadata.get().getName());
+            return response.build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @GET
