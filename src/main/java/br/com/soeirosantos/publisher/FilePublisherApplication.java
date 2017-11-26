@@ -12,18 +12,29 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.sns.AmazonSNS;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import io.dropwizard.Application;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 public class FilePublisherApplication extends Application<FilePublisherConfiguration> {
 
+
     public static void main(final String[] args) throws Exception {
         new FilePublisherApplication().run(args);
     }
 
+    private MigrationsBundle<FilePublisherConfiguration> migrationsBundle =
+            new MigrationsBundle<FilePublisherConfiguration>() {
+                @Override
+                public DataSourceFactory getDataSourceFactory(FilePublisherConfiguration configuration) {
+                    return configuration.getDataSourceFactory();
+                }
+            };
     private final HibernateBundle<FilePublisherConfiguration> hibernateBundle =
             new HibernateBundle<FilePublisherConfiguration>(FileMetadata.class) {
                 @Override
@@ -39,6 +50,13 @@ public class FilePublisherApplication extends Application<FilePublisherConfigura
 
     @Override
     public void initialize(final Bootstrap<FilePublisherConfiguration> bootstrap) {
+        bootstrap.setConfigurationSourceProvider(
+                new SubstitutingSourceProvider(
+                        bootstrap.getConfigurationSourceProvider(),
+                        new EnvironmentVariableSubstitutor(false)
+                )
+        );
+        bootstrap.addBundle(migrationsBundle);
         bootstrap.addBundle(hibernateBundle);
     }
 
@@ -60,5 +78,4 @@ public class FilePublisherApplication extends Application<FilePublisherConfigura
         environment.jersey().register(MultiPartFeature.class);
         environment.jersey().register(new FileResource(fileMetadataService, configuration.getMaxRequestSize()));
     }
-
 }

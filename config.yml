@@ -1,12 +1,10 @@
 
 
 database:
-  driverClass: org.h2.Driver
-  user: sa
-  password: sa
-  url: jdbc:h2:./target/local-db
-  properties:
-      hibernate.hbm2ddl.auto: create
+driverClass: org.postgresql.Driver
+  user: ${DB_USER:-postgres}
+  password: ${DB_PASSWORD:-postgres}
+  url: jdbc:postgresql://${DB_HOST:-localhost}:${DB_PORT:-5432}/publisher-db
 
 logging:
   level: INFO
@@ -27,11 +25,11 @@ logging:
 
 aws:
   credentials:
-    accessKey: foo
-    secretKey: bar
+    accessKey: ${AWS_ACCESS_KEY:-changeme}
+    secretKey: ${AWS_SECRET_KEY:-changeme}
   s3:
-    bucketName: file-publisher
+    bucketName: ${AWS_BUCKET_NAME:-changeme}
   sns:
-    topicName: baz
+    topicName: ${AWS_TOPIC_NAME:-changeme}
 
 maxRequestSize: 52428800 #50MB
