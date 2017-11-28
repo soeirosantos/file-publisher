@@ -1,4 +1,4 @@
-package br.com.soeirosantos.publisher.client;
+package br.com.soeirosantos.publisher.core.service;
 
 import br.com.soeirosantos.publisher.core.entity.FileMetadata;
 

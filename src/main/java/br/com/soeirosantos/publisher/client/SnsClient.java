@@ -1,10 +1,9 @@
-package br.com.soeirosantos.publisher.client.impl;
+package br.com.soeirosantos.publisher.client;
 
-import br.com.soeirosantos.publisher.client.NotificationService;
+import br.com.soeirosantos.publisher.core.service.NotificationService;
 import br.com.soeirosantos.publisher.core.entity.FileMetadata;
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.model.PublishRequest;
-import com.amazonaws.services.sns.model.PublishResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 

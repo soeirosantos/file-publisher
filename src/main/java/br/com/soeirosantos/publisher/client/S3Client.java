@@ -1,6 +1,6 @@
-package br.com.soeirosantos.publisher.client.impl;
+package br.com.soeirosantos.publisher.client;
 
-import br.com.soeirosantos.publisher.client.StorageService;
+import br.com.soeirosantos.publisher.core.service.StorageService;
 import br.com.soeirosantos.publisher.core.entity.FileMetadata;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;

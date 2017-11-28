@@ -1,9 +1,9 @@
 package br.com.soeirosantos.publisher;
 
-import br.com.soeirosantos.publisher.client.NotificationService;
-import br.com.soeirosantos.publisher.client.StorageService;
-import br.com.soeirosantos.publisher.client.impl.S3Client;
-import br.com.soeirosantos.publisher.client.impl.SnsClient;
+import br.com.soeirosantos.publisher.core.service.NotificationService;
+import br.com.soeirosantos.publisher.core.service.StorageService;
+import br.com.soeirosantos.publisher.client.S3Client;
+import br.com.soeirosantos.publisher.client.SnsClient;
 import br.com.soeirosantos.publisher.core.entity.FileMetadata;
 import br.com.soeirosantos.publisher.core.service.FileMetadataService;
 import br.com.soeirosantos.publisher.db.FileMetadataDao;

@@ -2,8 +2,6 @@ package br.com.soeirosantos.publisher.core.service;
 
 import br.com.soeirosantos.publisher.api.FileDetails;
 import br.com.soeirosantos.publisher.api.FileDetailsMapper;
-import br.com.soeirosantos.publisher.client.NotificationService;
-import br.com.soeirosantos.publisher.client.StorageService;
 import br.com.soeirosantos.publisher.core.entity.FileMetadata;
 import br.com.soeirosantos.publisher.db.FileMetadataDao;
 import org.modelmapper.ModelMapper;
